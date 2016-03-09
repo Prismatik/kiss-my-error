@@ -1,0 +1,25 @@
+{
+  "name": "kiss-my-error",
+  "version": "1.0.0",
+  "description": "Prismatik's standard errors handling utils",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prismatik/kiss-my-error.git"
+  },
+  "keywords": [
+    "errors",
+    "handling",
+    "express",
+    "middleware"
+  ],
+  "author": "Nikolay Nemshilov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Prismatik/kiss-my-error/issues"
+  },
+  "homepage": "https://github.com/Prismatik/kiss-my-error#readme"
+}
