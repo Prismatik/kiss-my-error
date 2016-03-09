@@ -5,7 +5,7 @@ const env      = process.env.NODE_ENV || "development";
 
 module.exports = function(options) {
   return env === "production" ? productionMiddleware(options) :
-         env === "test" ? basicMiddleware(options) : developmentMiddleware(options);
+         env === "test" ? testMiddleware(options) : developmentMiddleware(options);
 };
 
 /**
@@ -16,13 +16,9 @@ module.exports = function(options) {
  */
 function productionMiddleware(options) {
   const render = renderer(getProductionErrorTemplate());
-  const basic  = basicMiddleware(options, (err, req, res) => {
+  return basicMiddleware(options, (err, req, res) => {
     res.status(500).send(render(err, req));
   });
-
-  return function errorsHandler(err, req, res, next) {
-    basic(err, req, res, next);
-  };
 }
 
 /**
@@ -33,17 +29,23 @@ function productionMiddleware(options) {
  */
 function developmentMiddleware(options) {
   const render = renderer(__dirname + "/../public/500.dev.html");
-  const basic  = basicMiddleware(options, (err, req, res) => {
+  return basicMiddleware(options, (err, req, res) => {
     res.status(500).send(render(err, req));
   });
-
-  return function errorsHandler(err, req, res, next) {
-    basic(err, req, res, next);
-  };
 }
 
 /**
- * Default middleware handler, just logs it into STDOUT
+ * The test environemnt middleware, doesn't do anything
+ *
+ * @params {Object} options
+ * @return {Function} middleware
+ */
+function testMiddleware(options) {
+  return basicMiddleware(options, () => {});
+}
+
+/**
+ * Default middleware handler
  *
  * @param {Object} options
  * @param {Function} callback
@@ -57,7 +59,7 @@ function basicMiddleware(options, callback) {
 
     if (status === 500) {
       log(err, req, () => {
-        callback && callback(err, req, res);
+        callback(err, req, res);
         next(err, req, res);
       });
     } else {
