@@ -29,7 +29,7 @@ if `NODE_ENV=production` is exported it will automatically hide all the error
 details and spit out a basic error page.
 
 if `SENTRY_DSN` is exported then this thing will automatically report all the
-errors to the specified specified sentry acc/project.
+errors to the specified sentry acc/project.
 
 ## Custom Error Page
 

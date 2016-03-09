@@ -6,6 +6,25 @@
     <style>{{style}}</style>
   </head>
   <body>
-    <h1>500: Everything is terrible!</h1>
+    <h1>500 Error</h1>
+
+    <h2>{{error}}</h2>
+    <pre>{{trace}}</pre>
+
+    <h3>HTTP Params</h3>
+    <p>
+      <span class="method">{{method}}</span>
+      <span class="path">{{path}}</span>
+      <span class="content-type">({{contentType}})</span>
+    </p>
+
+    <h3>Body</h3>
+    <pre>{{body}}</pre>
+
+    <h3>Params</h3>
+    <pre>{{params}}</pre>
+
+    <h3>Query</h3>
+    <pre>{{query}}</pre>
   </body>
 </html>

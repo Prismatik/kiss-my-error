@@ -8,31 +8,25 @@
 }
 
 body {
-  padding: 80px 100px;
+  padding: 30px 100px;
   font: 16px "Helvetica Neue", "Lucida Grande", "Arial";
-  background: #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ECE9E9));
-  background: #ECE9E9 -moz-linear-gradient(top, #fff, #ECE9E9);
+  background: #f8f8f8;
   background-repeat: no-repeat;
   color: #555;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2 {
-  font-size: 22px;
+
+h1, h2, h3, h4 {
   color: #343434;
 }
-h1 em, h2 em {
-  padding: 0 5px;
-  font-weight: normal;
-}
+
 h1 {
-  font-size: 60px;
+  font-size: 4em;
+  margin-bottom: .5em;
 }
-h2 {
-  margin-top: 10px;
-}
-ul li {
-  list-style: none;
-}
-#stacktrace {
-  margin-left: 60px;
+
+pre {
+  background: #eee;
+  padding: 1em;
+  border-radius: 3px;
 }
