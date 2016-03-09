@@ -15,7 +15,7 @@ const app = express();
 
 app.use(routes);
 
-app.use(errors.middleware); // <- must be the last one!
+app.use(errors.middleware()); // <- must be the last one!
 
 export default app;
 ```
