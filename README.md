@@ -8,14 +8,14 @@ aware.
 
 ```js
 import express from "express";
-import { middleware as errorsHandler } from "kiss-my-error";
+import errors from "kiss-my-error";
 import routes from "./routes";
 
 const app = express();
 
 app.use(routes);
 
-app.use(errorsHandler); // <- must be the last one!
+app.use(errors.middleware); // <- must be the last one!
 
 export default app;
 ```

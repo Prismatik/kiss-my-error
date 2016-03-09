@@ -8,12 +8,16 @@ function sentryLogger(options) {
   const client = new raven.Client(SENTRY_DSN);
 
   return function logger(error, request, callback) {
-    client.captureError(err, parsers.parseRequest(request), callback);
+    if (request) {
+      client.captureError(err, parsers.parseRequest(request), callback || function() {});
+    } else {
+      client.captureException(err, callback || function() {});
+    }
   };
 }
 
 function dummyLogger(options) {
   return function logger(error, request, callback) {
-    callback();
+    callback && callback();
   };
 }
