@@ -1,3 +1,4 @@
+const fs       = require("fs");
 const logger   = require("./logger");
 const renderer = require("./renderer");
 const env      = process.env.NODE_ENV || "development";
@@ -14,7 +15,7 @@ module.exports = function(options) {
  * @return {Function} middleware
  */
 function productionMiddleware(options) {
-  const render = renderer(__dirname + "/../public/500.html");
+  const render = renderer(getProductionErrorTemplate());
   const basic  = basicMiddleware(options, (err, req, res) => {
     res.status(500).send(render(err, req));
   });
@@ -63,4 +64,22 @@ function basicMiddleware(options, callback) {
       next(err);
     }
   };
+}
+
+/**
+ * Tries to use the project local `public/500.html` error page
+ * if that is not found then it uses the default one that came
+ * with the package
+ *
+ * @return {string} template filename
+ */
+function getProductionErrorTemplate() {
+  var template = process.cwd() + "/public/500.html";
+
+  try {
+    fs.statSync(template);
+    return template;
+  } catch (e) {
+    return __dirname + "/../public/500.html";
+  }
 }

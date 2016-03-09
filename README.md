@@ -30,3 +30,10 @@ details and spit out a basic error page.
 
 if `SENTRY_DSN` is exported then this thing will automatically report all the
 errors to the specified specified sentry acc/project.
+
+## Custom Error Page
+
+By default this package comes with a vanilla 500 error page template for production
+use. A very basic one. If you want a custom 500 error page for a specific project,
+just create a `public/500.html` file in the project. This module will automatically
+pick it up.
