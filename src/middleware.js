@@ -1,10 +1,10 @@
-const env = process.env.NODE_ENV || "development";
+const logger = require("./logger");
+const env    = process.env.NODE_ENV || "development";
 
 module.exports = function(options) {
   return env === "production" ? productionMiddleware(options) :
-         env === "test" ? defaultMiddleware(options) : developmentMiddleware(options);
+         env === "test" ? basicMiddleware(options) : developmentMiddleware(options);
 };
-
 
 /**
  * Production middleware renders a minimal 500 page and tries to notify sentry
@@ -13,8 +13,10 @@ module.exports = function(options) {
  * @return {Function} middleware
  */
 function productionMiddleware(options) {
+  const basic = basicMiddleware(options);
+
   return function errorsHandler(err, req, res, next) {
-    defaultMiddleware()(err, req, res, next);
+    basic(err, req, res, next);
   };
 }
 
@@ -25,8 +27,10 @@ function productionMiddleware(options) {
  * @return {Function} middleware
  */
 function developmentMiddleware(options) {
+  const basic = basicMiddleware(options);
+
   return function errorsHandler(err, req, res, next) {
-    defaultMiddleware()(err, req, res, next);
+    basic(err, req, res, next);
   };
 }
 
@@ -36,8 +40,16 @@ function developmentMiddleware(options) {
  * @param {Object} options
  * @return {Function} middleware
  */
-function defaultMiddleware(options) {
+function basicMiddleware(options) {
+  const log = logger(options);
+
   return function errorsHandler(err, req, res, next) {
-    err ? next(err) : next();
+    const status = err.status || err.statusCode || err.status_code || 500;
+
+    if (status === 500) {
+      log(err, req, () => { next(err, req, res) });
+    } else {
+      next(err);
+    }
   };
 }
